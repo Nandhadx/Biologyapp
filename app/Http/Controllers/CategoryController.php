@@ -36,6 +36,8 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
+
+
     public function update(Request $request)
     {
         $category = Category::findOrFail($request->id);
