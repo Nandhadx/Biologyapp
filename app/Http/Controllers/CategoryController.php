@@ -14,10 +14,6 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    public function create()
-    {
-        return view('categories.create');
-    }
 
     public function store(Request $request)
     {
@@ -33,7 +29,9 @@ class CategoryController extends Controller
 
     public function edit(Request $request)
     {
-        return view('categories.edit', compact('category'));
+        $categories = Category::all();
+        $category = Category::findOrFail($request->id);
+        return view('categories.edit', compact('category', 'categories'));
     }
 
 
@@ -52,9 +50,8 @@ class CategoryController extends Controller
     }
 
 
-    public function delete(Request $request, Category $category)
+    public function delete(Request $request)
     {
-        // var_dump($request->id);exit();
         try {
             $category = Category::findOrFail($request->id);
             $category->delete();

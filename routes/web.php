@@ -18,9 +18,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Categories Routes
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 Route::get('/categories/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::post('/categories/edit/{id}', [CategoryController::class, 'update'])->name('categories.update');
 Route::get('/categories_remove/{id}', [CategoryController::class, 'delete'])->name('categories.delete');
 
 // Students Routes
@@ -31,8 +31,10 @@ Route::get('/students/{id}/edit', [StudentController::class, 'edit'])->name('stu
 
 // Instructors Routes
 Route::get('/instructors', [InstructorController::class, 'index'])->name('instructors.index');
-Route::get('/instructors/create', [InstructorController::class, 'create'])->name('instructors.create');
-Route::post('/instructors', [InstructorController::class, 'store'])->name('instructors.store');
+Route::post('/instructors', [InstructorController::class, 'add'])->name('instructors.add');
+Route::get('/instructors/edit/{id}', [InstructorController::class, 'edit'])->name('instructors.edit');
+Route::post('/instructors/edit/{id}', [InstructorController::class, 'update'])->name('instructors.update');
+Route::get('/instructors_remove/{id}', [InstructorController::class, 'delete'])->name('instructors.delete');
 
 // Courses Routes
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
