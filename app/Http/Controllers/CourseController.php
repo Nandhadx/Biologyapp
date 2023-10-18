@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use App\Models\Course;
 use App\Models\Category;
 use App\Models\Instructor;
@@ -126,6 +126,59 @@ public function uploadfiles($CourseID)
     }
 }
 
+// public function fileupload(Request $request)
+// {
+//     $request->validate([
+//         'ResourceType' => 'required',
+//         'ResourceFile' => 'required|file|mimes:pdf,doc,docx,mp4,avi,mov|file|max:102400',
+//         'FileName' => 'required',
+//     ]);
+
+//     $resource = new CourseFiles();
+//     $resource->CourseID = $request->input('CourseID');
+//     $resource->ResourceType = $request->input('ResourceType');
+//     $resource->FileName = $request->input('FileName');
+//     if ($request->hasFile('ResourceFile')) {
+//         $file = $request->file('ResourceFile');
+//         $fileName = $file->getClientOriginalName();
+//         $file->storeAs('', $fileName, 'public');
+//         $resource->ResourceFile = $fileName;
+//     } else {
+//         Log::info('No file uploaded.');
+//     }
+//     $resource->save();
+//     return response()->json(['message' => 'Resource added successfully']);
+// }
+
+// public function fileupload(Request $request)
+// {
+//     $request->validate([
+//         'ResourceType' => 'required',
+//         'ResourceFile' => 'required|file|mimes:pdf,doc,docx,mp4,avi,mov|file|max:102400',
+//         'FileName' => 'required',
+//     ]);
+
+//     $resource = new CourseFiles();
+//     $resource->CourseID = $request->input('CourseID');
+//     $resource->ResourceType = $request->input('ResourceType');
+//     $resource->FileName = $request->input('FileName');
+
+//     if ($request->hasFile('ResourceFile')) {
+//         $file = $request->file('ResourceFile');
+//         $fileName = $file->getClientOriginalName();
+//         $file->move(public_path(), $fileName);
+//         $resource->ResourceFile = $fileName;
+//     } else {
+//         // Log::info('No file uploaded.');
+//     }
+
+//     $resource->save();
+
+//     return response()->json(['message' => 'Resource added successfully']);
+// }
+// }
+
+
 public function fileupload(Request $request)
 {
     $request->validate([
@@ -138,17 +191,16 @@ public function fileupload(Request $request)
     $resource->CourseID = $request->input('CourseID');
     $resource->ResourceType = $request->input('ResourceType');
     $resource->FileName = $request->input('FileName');
+
     if ($request->hasFile('ResourceFile')) {
         $file = $request->file('ResourceFile');
         $fileName = $file->getClientOriginalName();
-        $file->storeAs('', $fileName, 'public');
-        $resource->ResourceFile = $fileName;
+        $file->move(public_path('files'), $fileName);
+        $resource->ResourceFile = 'files/' . $fileName;
     } else {
-        \Log::info('No file uploaded.');
+        Log::info('No file uploaded.');
     }
     $resource->save();
     return response()->json(['message' => 'Resource added successfully']);
 }
-
-
 }

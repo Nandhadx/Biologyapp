@@ -35,6 +35,7 @@
                                         <td>{{ $data->ResourceFile }}</td>
                                         <td>{{ $data->FileName }}</td>
                                         <td>{{ $data->UploadDate }}</td>
+                                        <td><a href="{{ url('/' . $data->ResourceFile) }}" class="btn btn-danger btn-sm">View</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
