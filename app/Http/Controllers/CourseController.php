@@ -119,5 +119,36 @@ class CourseController extends Controller
         return view('courses.files', compact('files'));
     }
 }
+public function uploadfiles($CourseID)
+{
+    if (isset($CourseID)) {
+        return view('courses.uploadfiles', compact('CourseID'));
+    }
+}
+
+public function fileupload(Request $request)
+{
+    $request->validate([
+        'ResourceType' => 'required',
+        'ResourceFile' => 'required|file|mimes:pdf,doc,docx,mp4,avi,mov|file|max:102400',
+        'FileName' => 'required',
+    ]);
+
+    $resource = new CourseFiles();
+    $resource->CourseID = $request->input('CourseID');
+    $resource->ResourceType = $request->input('ResourceType');
+    $resource->FileName = $request->input('FileName');
+    if ($request->hasFile('ResourceFile')) {
+        $file = $request->file('ResourceFile');
+        $fileName = $file->getClientOriginalName();
+        $file->storeAs('', $fileName, 'public');
+        $resource->ResourceFile = $fileName;
+    } else {
+        \Log::info('No file uploaded.');
+    }
+    $resource->save();
+    return response()->json(['message' => 'Resource added successfully']);
+}
+
 
 }

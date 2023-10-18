@@ -46,12 +46,14 @@
                                                 <td>{{ $courses23->Level }}</td>
                                                 <td>{{ $courses23->IsActive }}</td>
                                                 <td>
+                                                    <a href="{{ route('courses.upload', $courses23->CourseID) }}"
+                                                        class="btn btn-success btn-sm">Upload</a>
                                                     <a href="{{ route('courses.files', $courses23->CourseID) }}"
-                                                        class="btn-sm">Delete</a>
+                                                        class="btn btn-warning btn-sm">Files</a>
                                                     <a href="{{ route('courses.edit', $courses23->CourseID) }}"
                                                         class="btn btn-sm btn-primary">Edit</a>
                                                     <a href="{{ route('courses.delete', $courses23->CourseID) }}"
-                                                        class="btn-sm">Delete</a>
+                                                        class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach

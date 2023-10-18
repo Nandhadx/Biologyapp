@@ -45,6 +45,8 @@ Route::post('/courses/edit/{id}', [CourseController::class, 'update'])->name('co
 Route::get('/courses_remove/{id}', [CourseController::class, 'delete'])->name('courses.delete');
 
 Route::get('/courses_files/{id}', [CourseController::class, 'files'])->name('courses.files');
+Route::get('/courses_upload/{id}', [CourseController::class, 'uploadfiles'])->name('courses.upload');
+Route::post('/file_upload', [CourseController::class, 'fileupload'])->name('courses.fileupload');
 
 // InstructorCourse Routes
 Route::get('/instructorcourses', [InstructorCourseController::class, 'index'])->name('instructorcourses.index');

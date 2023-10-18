@@ -18,6 +18,36 @@
                         </div>
                         <div class="card-body ">
                             @if (count($files) > 0)
+                            <table id="kt_datatable_example_2" class="table table-striped table-row-bordered gy-5 gs-7">
+                                <thead>
+                                    <tr class="fw-bold fs-6 text-gray-800">
+                                        <th>ResourceType</th>
+                                        <th>ResourceFile</th>
+                                        <th>FileName</th>
+                                        <th>UploadDate</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($files as $data)
+                                    <tr>
+                                        <td>{{ $data->ResourceType }}</td>
+                                        <td>{{ $data->ResourceFile }}</td>
+                                        <td>{{ $data->FileName }}</td>
+                                        <td>{{ $data->UploadDate }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr class="border-top fw-bold fs-6 text-gray-800">
+                                        <th>ResourceType</th>
+                                        <th>ResourceFile</th>
+                                        <th>FileName</th>
+                                        <th>UploadDate</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
                             @else
                                 <div class="alert alert-warning" role="alert">
                                     <h1> No Files</h1>
@@ -34,4 +64,12 @@
         </div>
         <!--end::Container-->
     </div>
+    <script>
+$("#kt_datatable_example_2").DataTable({
+    "scrollY": "500px",
+    "scrollCollapse": true,
+    "paging": false,
+    "dom": "<'table-responsive'tr>"
+});
+</script>
 @endsection
