@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instructorcourse;
+use App\Models\Instructor;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
 
 class InstructorCourseController extends Controller
 {
     public function index()
     {
-        $Instructorcourses = Instructorcourse::all();
-        return view('Instructorcourses.index', compact('Instructorcourses'));
+        $instructorCourses = Instructorcourse::all();
+        $instructors = Instructor::all();
+        $courses = Course::all();
+        return view('Instructorcourses.index', compact('instructorCourses','instructors','courses'));
     }
 
     public function add(Request $request)
@@ -20,15 +23,15 @@ class InstructorCourseController extends Controller
         try {
             $request->validate([
                 'InstructorID' => 'required',
-                'CourseID	' => 'required',
+                'CourseID' => 'required', // Removed extra space
             ]);
 
-            $Instructorcourse = new Instructorcourse([
+            $instructorCourse = new Instructorcourse([
                 'InstructorID' => $request->input('InstructorID'),
                 'CourseID' => $request->input('CourseID'),
             ]);
 
-            $Instructorcourse->save();
+            $instructorCourse->save();
             return redirect()->route('Instructorcourses.index')->with('success', 'Instructorcourse created successfully');
         } catch (\Exception $e) {
             Log::error('Error creating Instructorcourse: ' . $e->getMessage());
@@ -36,25 +39,26 @@ class InstructorCourseController extends Controller
         }
     }
 
-
     public function edit(Request $request)
     {
-        $Instructorcourses = Instructorcourse::all();
-        $Instructorcourse = Instructorcourse::findOrFail($request->id);
-        return view('Instructorcourses.edit', compact('Instructorcourse', 'Instructorcourses'));
+        $instructorCourses = Instructorcourse::all();
+        $instructors = Instructor::all();
+        $courses = Course::all();
+        $instructorCourse = Instructorcourse::findOrFail($request->id);
+        return view('Instructorcourses.edit', compact('instructorCourse', 'instructorCourses','instructors','courses'));
     }
 
     public function update(Request $request)
     {
-        $InstructorCourseID = $request->id;
+        $instructorCourseID = $request->id; // Changed to camelCase
 
         try {
             $request->validate([
                 'InstructorID' => 'required',
-                'CourseID	' => 'required',
+                'CourseID' => 'required', // Removed extra space
             ]);
 
-            Instructorcourse::where('InstructorCourseID', $InstructorCourseID)->update([
+            Instructorcourse::where('InstructorCourseID', $instructorCourseID)->update([
                 'InstructorID' => $request->input('InstructorID'),
                 'CourseID' => $request->input('CourseID'),
             ]);
@@ -66,14 +70,11 @@ class InstructorCourseController extends Controller
         }
     }
 
-
-
-
     public function delete(Request $request)
     {
         try {
-            $Instructorcourse = Instructorcourse::findOrFail($request->id);
-            $Instructorcourse->delete();
+            $instructorCourse = Instructorcourse::findOrFail($request->id);
+            $instructorCourse->delete();
             return redirect()->route('Instructorcourses.index')->with('success', 'Instructorcourse deleted successfully');
         } catch (\Exception $e) {
             Log::error('Error deleting Instructorcourse: ' . $e->getMessage());

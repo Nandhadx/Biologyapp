@@ -9,5 +9,15 @@ class Course extends Model
 {
     use HasFactory;
     public $timestamps = false;
-
+    protected $primaryKey = 'CourseID';
+    protected $fillable = [
+        'CourseName',
+        'Description',
+        'StartDate',
+        'EndDate',
+        'Price',
+        'Level',
+        'Category',
+        'IsActive',
+    ];
 }

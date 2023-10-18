@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Instructorcourse extends Model
+class CourseFiles extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'instructorcourse';
-    protected $primaryKey = 'InstructorCourseID';
+    protected $table = 'resources';
+    protected $primaryKey = 'ResourceID';
     protected $fillable = [
-        'InstructorID',
         'CourseID',
+        'ResourceType',
+        'ResourceFile',
+        'FileName',
+        'UploadDate',
     ];
-    public function getKeyName()
-    {
-        return 'InstructorCourseID';
-    }
 }

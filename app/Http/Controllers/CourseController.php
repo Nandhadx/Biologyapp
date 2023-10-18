@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Category;
+use App\Models\Instructor;
+use App\Models\CourseFiles;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -15,43 +18,106 @@ class CourseController extends Controller
 
     public function create()
     {
-        return view('courses.create');
+        $Courses = Course::all();
+        $Categorys = Category::all();
+        $Instructors = Instructor::all();
+        return view('courses.create', compact('Courses', 'Instructors', 'Categorys'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'CourseName' => 'required|max:100',
-            'Description' => 'nullable',
-            // Add validation rules for other fields
+            'CourseName' => 'required',
+            'Description' => 'required',
+            'StartDate' => 'required',
+            'EndDate' => 'required',
+            'Price' => 'required',
+            'Level' => 'required',
+            'CategoryID' => 'required',
+            'IsActive' => 'required',
         ]);
 
-        Course::create($request->all());
+        $course = new Course([
+            'CourseName' => $request->input('CourseName'),
+            'Description' => $request->input('Description'),
+            'StartDate' => $request->input('StartDate'),
+            'EndDate' => $request->input('EndDate'),
+            'Price' => $request->input('Price'),
+            'Level' => $request->input('Level'),
+            'Category' => $request->input('CategoryID'),
+            'IsActive' => $request->input('IsActive'),
+        ]);
 
+        $course->save();
         return redirect()->route('courses.index')->with('success', 'Course created successfully');
     }
-
-    public function edit(Course $course)
+    public function edit($CourseID)
     {
-        return view('courses.edit', compact('course'));
+        $Categorys = Category::all();
+        $Instructors = Instructor::all();
+        $Courses = Course::find($CourseID);
+
+        if ($Courses) {
+            return view('courses.edit', compact('Courses', 'Instructors', 'Categorys'));
+        } else {
+            // Handle the case where the course with the specified CourseID is not found.
+            // You can redirect the user or show an error message.
+        }
     }
 
-    public function update(Request $request, Course $course)
+    public function update(Request $request, $CourseID)
     {
         $request->validate([
-            'CourseName' => 'required|max:100',
-            'Description' => 'nullable',
+            'CourseName' => 'required',
+            'Description' => 'required',
+            'StartDate' => 'required',
+            'EndDate' => 'required',
+            'Price' => 'required',
+            'Level' => 'required',
+            'CategoryID' => 'required',
+            'IsActive' => 'required',
         ]);
 
-        $course->update($request->all());
+        $course = Course::find($request->CourseID);
+
+        if (!$course) {
+            return redirect()->route('courses.index')->with('failed', 'Course Not Updated ');
+        }
+
+        $course->update([
+            'CourseName' => $request->input('CourseName'),
+            'Description' => $request->input('Description'),
+            'StartDate' => $request->input('StartDate'),
+            'EndDate' => $request->input('EndDate'),
+            'Price' => $request->input('Price'),
+            'Level' => $request->input('Level'),
+            'CategoryID' => $request->input('CategoryID'),
+            'IsActive' => $request->input('IsActive'),
+        ]);
 
         return redirect()->route('courses.index')->with('success', 'Course updated successfully');
     }
 
-    public function destroy(Course $course)
-    {
-        $course->delete();
 
-        return redirect()->route('courses.index')->with('success', 'Course deleted successfully');
+    public function delete($CourseID)
+    {
+        $course = Course::find($CourseID);
+
+        if ($course) {
+            $course->delete();
+            return redirect()->route('courses.index')->with('success', 'Course deleted successfully');
+        } else {
+        }
     }
+    public function files($CourseID)
+{
+    $files = CourseFiles::where('CourseID', '=', $CourseID)->get();
+
+    if ($files->count() > 0) {
+        return view('courses.files', compact('files'));
+    } else {
+        return view('courses.files', compact('files'));
+    }
+}
+
 }

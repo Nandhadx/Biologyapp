@@ -39,9 +39,14 @@ Route::get('/instructors_remove/{id}', [InstructorController::class, 'delete'])-
 // Courses Routes
 Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
-Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+Route::post('/coursesstore', [CourseController::class, 'store'])->name('courses.store');
+Route::get('/courses/edit/{id}', [CourseController::class, 'edit'])->name('courses.edit');
+Route::post('/courses/edit/{id}', [CourseController::class, 'update'])->name('courses.update');
+Route::get('/courses_remove/{id}', [CourseController::class, 'delete'])->name('courses.delete');
+
+Route::get('/courses_files/{id}', [CourseController::class, 'files'])->name('courses.files');
 
 // InstructorCourse Routes
 Route::get('/instructorcourses', [InstructorCourseController::class, 'index'])->name('instructorcourses.index');
 Route::get('/instructorcourses/create', [InstructorCourseController::class, 'create'])->name('instructorcourses.create');
-Route::post('/instructorcourses', [InstructorCourseController::class, 'store'])->name('instructorcourses.store');
+Route::post('/instructorcourses', [InstructorCourseController::class, 'store'])->name('instructorcourses.add');
