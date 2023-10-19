@@ -20,4 +20,8 @@ class Course extends Model
         'Category',
         'IsActive',
     ];
+    public function resources()
+    {
+        return $this->hasMany(Resource::class);
+    }
 }
