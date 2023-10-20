@@ -139,13 +139,11 @@ class ApiController extends Controller
     public function ListPurchasedCoursesFiles(Request $request)
     {
         $CourseID = $request->input('CourseID');
-        $StudentID = $request->input('StudentID');
-        $user = Student::find($StudentID);
-        $Course = Course::find($request->input('CourseID'));
+        $StudentID = $request->input('UserID');
+        $user = User::find($StudentID);
+        $Course = Course::find($CourseID);
         $Resources = Resource::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
-            response()->json(['resources' => $Resources], 200);
-            exit();
-            $Payment = Payments::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
+        $Payment = Payments::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
