@@ -79,9 +79,9 @@
                                                 <td>{{ $category->Description }}</td>
                                                 <td>
                                                     <a href="{{ route('categories.edit', $category->CategoryID) }}"
-                                                        class="btn btn-primary">Edit</a>
+                                                        class="btn btn-success">Edit</a>
                                                     <a href="{{ route('categories.delete', $category->CategoryID) }}"
-                                                        class="btn btn-primary">Delete</a>
+                                                        class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach

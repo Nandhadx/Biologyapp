@@ -50,5 +50,7 @@ Route::post('/file_upload', [CourseController::class, 'fileupload'])->name('cour
 
 // InstructorCourse Routes
 Route::get('/instructorcourses', [InstructorCourseController::class, 'index'])->name('instructorcourses.index');
-Route::get('/instructorcourses/create', [InstructorCourseController::class, 'create'])->name('instructorcourses.create');
-Route::post('/instructorcourses', [InstructorCourseController::class, 'store'])->name('instructorcourses.add');
+Route::get('/instructorcourses/edit/{id}', [InstructorCourseController::class, 'edit'])->name('instructorcourses.edit');
+Route::post('/instructorcourses', [InstructorCourseController::class, 'add'])->name('instructorcourses.add');
+Route::post('/instructorcourses/edit/{id}', [InstructorCourseController::class, 'update'])->name('instructorcourses.update');
+Route::get('/instructorcourses_remove/{id}', [InstructorCourseController::class, 'delete'])->name('instructorcourses.delete');

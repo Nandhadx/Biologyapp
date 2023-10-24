@@ -23,14 +23,12 @@ class InstructorCourseController extends Controller
         try {
             $request->validate([
                 'InstructorID' => 'required',
-                'CourseID' => 'required', // Removed extra space
+                'CourseID' => 'required',
             ]);
-
             $instructorCourse = new Instructorcourse([
                 'InstructorID' => $request->input('InstructorID'),
                 'CourseID' => $request->input('CourseID'),
             ]);
-
             $instructorCourse->save();
             return redirect()->route('Instructorcourses.index')->with('success', 'Instructorcourse created successfully');
         } catch (\Exception $e) {
@@ -69,16 +67,15 @@ class InstructorCourseController extends Controller
             return redirect()->back()->with('error', 'An error occurred while updating the Instructorcourse.');
         }
     }
-
-    public function delete(Request $request)
+    public function delete($id)
     {
+        $Instructorcourse = Instructorcourse::find($id);
         try {
-            $instructorCourse = Instructorcourse::findOrFail($request->id);
-            $instructorCourse->delete();
-            return redirect()->route('Instructorcourses.index')->with('success', 'Instructorcourse deleted successfully');
+            $Instructorcourse = Instructorcourse::find($id);
+            $Instructorcourse->delete();
+            return redirect()->route('instructorcourses.index')->with('success', 'Instructorcourse deleted successfully');
         } catch (\Exception $e) {
-            Log::error('Error deleting Instructorcourse: ' . $e->getMessage());
-            return redirect()->route('Instructorcourses.index')->with('error', 'An error occurred while deleting the Instructorcourse.');
+            return redirect()->route('instructorcourses.index')->with('error', 'An error occurred while deleting the Instructorcourse.');
         }
     }
 }

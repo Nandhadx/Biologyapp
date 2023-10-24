@@ -28,6 +28,8 @@ Route::get('/ListCourse', [ApiController::class, 'ListCourse'])->name('ListCours
     Route::post('/PaymentSuccess', [ApiController::class, 'PaymentSuccess'])->name('PaymentSuccess');
     Route::get('/ListPurchasedCourses/{id}', [ApiController::class, 'ListPurchasedCourses'])->name('ListPurchasedCourses');
     Route::Post('/ListPurchasedCoursesFiles', [ApiController::class, 'ListPurchasedCoursesFiles'])->name('ListPurchasedCoursesFiles');
+    Route::Post('/allCoursesFiles/{id}', [ApiController::class, 'allCoursesFiles'])->name('allCoursesFiles');
+    Route::get('/CoursesFiles/{id}', [ApiController::class, 'CoursesFiles'])->name('CoursesFiles');
     Route::get('/searchCourses', [ApiController::class, 'searchCourses'])->name('searchCourses');
     Route::get('/searchResources', [ApiController::class, 'searchResources'])->name('searchResources');
     Route::get('/myProfile', [ApiController::class, 'myProfile'])->name('myProfile');

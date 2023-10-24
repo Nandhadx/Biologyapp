@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="container" id="kt_content_container">
@@ -7,14 +6,19 @@
                 <div class="col-xxl-5">
                     <div class="card card-xxl-stretch">
                         <div class="card-body d-flex flex-column justify-content-between h-100">
-                            <form method="POST" action="{{ route('instructorcourses.add') }}">
+                            <form method="POST"
+                                action="{{ route('instructorcourses.update', $instructorCourse->InstructorCourseID) }}">
                                 @csrf
                                 <div class="form-group">
                                     <label for="InstructorID" class="required form-label">Instructor</label>
-                                    <select name="InstructorID" class="form-control form-control-solid @error('InstructorID') is-invalid @enderror">
+                                    <select name="InstructorID"
+                                        class="form-control form-control-solid @error('InstructorID') is-invalid @enderror">
                                         <option value="">Select an Instructor</option>
                                         @foreach ($instructors as $instructor)
-                                            <option value="{{ $instructor->id }}">{{ $instructor->FirstName }}</option>
+                                            <option value="{{ $instructor->InstructorID }}"
+                                                {{ old('InstructorID', $instructorCourse->InstructorID) == $instructor->InstructorID ? 'selected' : '' }}>
+                                                {{ $instructor->FirstName }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('InstructorID')
@@ -23,12 +27,17 @@
                                         </span>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
                                     <label for="CourseID" class="required form-label">Course</label>
-                                    <select name="CourseID" class="form-control form-control-solid @error('CourseID') is-invalid @enderror">
+                                    <select name="CourseID"
+                                        class="form-control form-control-solid @error('CourseID') is-invalid @enderror">
                                         <option value="">Select a Course</option>
                                         @foreach ($courses as $course)
-                                            <option value="{{ $course->CourseID }}">{{ $course->CourseName }}</option>
+                                            <option value="{{ $course->CourseID }}"
+                                                {{ old('CourseID', $instructorCourse->CourseID) == $course->CourseID ? 'selected' : '' }}>
+                                                {{ $course->CourseName }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('CourseID')
@@ -37,6 +46,7 @@
                                         </span>
                                     @enderror
                                 </div>
+
                                 <div class="form-group">
                                     <button type="submit"
                                         class="btn btn-primary mt-2">{{ isset($instructorCourse) ? 'Update' : 'Create' }}
@@ -70,7 +80,7 @@
                                                 <td>{{ $instructorCourse->CourseID }}</td>
                                                 <td>
                                                     <a href="{{ route('instructorcourses.edit', $instructorCourse->InstructorCourseID) }}"
-                                                        class="btn btn-sm btn-primary"><i class="fas fa-pen-nib"></i></a>
+                                                        class="btn btn-sm btn-success"><i class="fas fa-pen-nib"></i></a>
                                                     <a href="{{ route('instructorcourses.delete', $instructorCourse->InstructorCourseID) }}"
                                                         class="btn btn-sm btn-danger"><i class="las la-trash"></i></a>
                                                 </td>

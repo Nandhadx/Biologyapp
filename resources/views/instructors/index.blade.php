@@ -140,7 +140,7 @@
                                                 <td>{{ $instructor->JoinDate }}</td>
                                                 <td>
                                                     <a href="{{ route('instructors.edit', $instructor->InstructorID) }}"
-                                                        class="btn  btn-sm btn-primary"><i class="fas fa-pen-nib"></i></a>
+                                                        class="btn  btn-sm btn-success"><i class="fas fa-pen-nib"></i></a>
                                                     <a href="{{ route('instructors.delete', $instructor->InstructorID) }}"
                                                         class="btn btn-sm btn-danger"><i class="las la-trash"></i></a>
                                                 </td>

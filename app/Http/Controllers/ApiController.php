@@ -56,7 +56,7 @@ class ApiController extends Controller
 
         Auth::login($user);
 
-        return response()->json(['message' => 'Registration successful','Student'=>$student, 'User' => $user]);
+        return response()->json(['message' => 'Registration successful', 'Student' => $student, 'User' => $user]);
     }
 
     public function login(Request $request)
@@ -141,25 +141,75 @@ class ApiController extends Controller
         $CourseID = $request->input('CourseID');
         $StudentID = $request->input('UserID');
         $user = User::find($StudentID);
-        $Course = Course::find($CourseID);
-        $Resources = Resource::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
-        $Payment = Payments::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        $Course = Course::find($CourseID);
         if (!$Course) {
             return response()->json(['message' => 'Course not found'], 404);
         }
+        $Payment = Payments::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
         if (!$Payment) {
             return response()->json(['message' => 'Payment not found'], 404);
         }
+        $Resources = Resource::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
         if (!$Resources) {
             return response()->json(['message' => 'Is Not Purchased'], 404);
         }
-        return response()->json(['CoursesFiles' => $Course], 200);
+        return response()->json([
+            'CoursesFiles' => $Course,
+            'Resources' => $Resources,
+            'Payment' => $Payment,
+        ], 200);
     }
 
+    public function allCoursesFiles(Request $request)
+    {
+        $CourseID = $request->input('CourseID');
+        $StudentID = $request->input('UserID');
+        $user = User::find($StudentID);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $Course = Course::find($CourseID);
+        if (!$Course) {
+            return response()->json(['message' => 'Course not found'], 404);
+        }
+        $Payment = Payments::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
+        if (!$Payment) {
+            return response()->json(['message' => 'Payment not found'], 404);
+        }
+        $Resources = Resource::where('UserID', $user->id)->where('CourseID', '=', $Course->CourseID)->get();
+        if (!$Resources) {
+            return response()->json(['message' => 'Is Not Purchased'], 404);
+        }
+        return response()->json([
+            'CoursesFiles' => $Course,
+            'Resources' => $Resources,
+            'Payment' => $Payment,
+        ], 200);
+    }
+    public function CoursesFiles($id)
+    {
+        $StudentID = $id;
+        $user = User::find($StudentID);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        // Assuming you have the Resource and Course models imported at the top of your PHP file.
 
+$Resources = Resource::select('resources.ResourceID', 'resources.CourseID', 'courses.CourseName', 'resources.ResourceType', 'resources.ResourceFile', 'resources.FileName', 'resources.UploadDate')
+->join('courses', 'resources.CourseID', '=', 'courses.CourseID')
+->get();
+
+        if (!$Resources) {
+            return response()->json(['message' => 'Empty'], 404);
+        }
+        return response()->json([
+            'Resources' => $Resources,
+        ], 200);
+    }
+    // https://www.ecomdating.com/public/api/CoursesFiles/1
     public function searchCourses(Request $request)
     {
         $searchQuery = $request->query('CourseName');

@@ -44,16 +44,16 @@
                                                 <td>{{ $courses23->EndDate }}</td>
                                                 <td>{{ $courses23->Price }}</td>
                                                 <td>{{ $courses23->Level }}</td>
-                                                <td>{{ $courses23->IsActive }}</td>
+                                                <td colspan="4">{{ $courses23->IsActive }}</td>
                                                 <td>
                                                     <a href="{{ route('courses.upload', $courses23->CourseID) }}"
                                                         class="btn btn-success btn-sm">Upload</a>
                                                     <a href="{{ route('courses.files', $courses23->CourseID) }}"
-                                                        class="btn btn-warning btn-sm">Files</a>
+                                                        class="btn btn-dark btn-sm">Files</a>
                                                     <a href="{{ route('courses.edit', $courses23->CourseID) }}"
-                                                        class="btn btn-sm btn-primary">Edit</a>
+                                                        class="btn btn-warning btn-sm ">Edit</a>
                                                     <a href="{{ route('courses.delete', $courses23->CourseID) }}"
-                                                        class="btn btn-danger btn-sm">Delete</a>
+                                                        class="btn btn-danger btn-sm">Remove</a>
                                                 </td>
                                             </tr>
                                         @endforeach

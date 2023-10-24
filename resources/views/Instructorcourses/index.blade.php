@@ -14,7 +14,7 @@
                                     <select name="InstructorID" class="form-control form-control-solid @error('InstructorID') is-invalid @enderror">
                                         <option value="">Select an Instructor</option>
                                         @foreach ($instructors as $instructor)
-                                            <option value="{{ $instructor->id }}">{{ $instructor->FirstName }}</option>
+                                            <option value="{{ $instructor->InstructorID}}">{{ $instructor->FirstName }}</option>
                                         @endforeach
                                     </select>
                                     @error('InstructorID')
@@ -65,11 +65,11 @@
                                     <tbody>
                                         @foreach ($instructorCourses as $instructorCourse)
                                             <tr>
-                                                <td>{{ $instructorCourse->instructor->name }}</td>
-                                                <td>{{ $instructorCourse->course->title }}</td>
+                                                <td>{{ $instructorCourse->InstructorID }}</td>
+                                                <td>{{ $instructorCourse->CourseID }}</td>
                                                 <td>
                                                     <a href="{{ route('instructorcourses.edit', $instructorCourse->InstructorCourseID) }}"
-                                                        class="btn btn-sm btn-primary"><i class="fas fa-pen-nib"></i></a>
+                                                        class="btn btn-sm btn-success"><i class="fas fa-pen-nib"></i></a>
                                                     <a href="{{ route('instructorcourses.delete', $instructorCourse->InstructorCourseID) }}"
                                                         class="btn btn-sm btn-danger"><i class="las la-trash"></i></a>
                                                 </td>
